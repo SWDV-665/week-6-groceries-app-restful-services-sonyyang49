@@ -12,8 +12,8 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 export class Tab3Page {
   //This is the title of the page.
   title = 'Grocery';
-  items = [];
   errorMessage: string;
+  items = [];
 
   constructor(
     public toastCtrl: ToastController,
@@ -23,38 +23,31 @@ export class Tab3Page {
   ) {
     dataService.dataChanged$.subscribe((dataChanged: boolean) => {
       this.loadItems();
-      window.location.reload();
     });
   }
 
-  ionViewDidEnter() {
+  ionViewDidLoad() {
     this.loadItems();
-    console.log('ionViewDidEnter');
   }
 
   loadItems() {
-    console.log('loadItems() has been called....');
     this.dataService
       .getItems()
       .subscribe(
         items => (this.items = items),
-        error => (this.errorMessage = error as any)
+        error => (this.errorMessage = <any>error)
       );
-  }
-  //Returns the grocery items from the injectable service.
-  getItems() {
-    return this.dataService.getItems();
   }
 
   //Removes the item with specified index from items array in the injectable service.
   async removeItem(item, index) {
     const toast = await this.toastCtrl.create({
-      message: 'Item ' + index + ' has been deleted.',
+      message: 'Item has been deleted.',
       duration: 2000
     });
     toast.present();
 
-    this.dataService.removeItem(item._id);
+    this.dataService.removeItem(item);
   }
 
   //Updates the item with specified index from items array in the injectable service.
@@ -72,9 +65,9 @@ export class Tab3Page {
     this.dataInput.showPrompt();
   }
 
-  async shareItem(item, index) {
+  async shareItem(item) {
     const toast = await this.toastCtrl.create({
-      message: 'Item ' + index + ' has been shared.',
+      message: 'Item  has been shared.',
       duration: 2000
     });
     toast.present();

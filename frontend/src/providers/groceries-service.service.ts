@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { throwError, concat, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,11 @@ import { throwError, concat, of } from 'rxjs';
 export class GroceriesServiceService {
   //Creates an empty list of items.
   items: any = [];
+
   dataChanged$: Observable<boolean>;
+
   private dataChangeSubject: Subject<boolean>;
+
   baseURL = 'http://localhost:8080';
 
   constructor(public nativeAudio: NativeAudio, public http: HttpClient) {
@@ -33,12 +35,17 @@ export class GroceriesServiceService {
     return Observable.throw(errMsg);
   }
 
-  //Returns the items in the items array.
-  getItems() {
-    console.log('getItems() called .....');
-    return this.http
-      .get<object[]>(this.baseURL + '/api/groceries')
-      .pipe(catchError(this.handleError));
+  getItems(): Observable<object[]> {
+    return this.http.get(this.baseURL + '/api/groceries').pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  private extractData(res: Response | any) {
+    let body = res;
+    console.log(body);
+    return body || {};
   }
 
   //Adds the new input item to the end of the items array.
@@ -50,11 +57,9 @@ export class GroceriesServiceService {
   }
 
   //Updates the item with specified index in the array.
-  editItem(item, index) {
-    console.log('editItem ' + item.id);
-    console.log('editItem ' + item);
+  editItem(item) {
     this.http
-      .put(this.baseURL + '/api/groceries/' + item.id, item)
+      .put(this.baseURL + '/api/groceries/' + item._id, item)
       .subscribe(res => {
         this.items = res;
         this.dataChangeSubject.next(true);
@@ -62,12 +67,14 @@ export class GroceriesServiceService {
   }
 
   //Remove the item with specified index in the array.
-  removeItem(id) {
-    console.log('#### Remove Item - Id = ', id);
-    this.http.delete(this.baseURL + '/api/groceries/' + id).subscribe(res => {
-      this.items = res;
-      this.dataChangeSubject.next(true);
-    });
+  removeItem(item) {
+    console.log('#### Remove Item - Id = ', item._id);
+    this.http
+      .delete(this.baseURL + '/api/groceries/' + item._id)
+      .subscribe(res => {
+        this.items = res;
+        this.dataChangeSubject.next(true);
+      });
     this.deleteAudio();
   }
 

@@ -12,14 +12,11 @@
     <ion-card-subtitle>Check List</ion-card-subtitle>
   </ion-card-header>
 
-  <h3 *ngIf="getItems().length === 0">
+  <h3 *ngIf="items.length === 0">
     No items available on the list!
   </h3>
   <ion-list>
-    <ion-item-sliding
-      id="item100"
-      *ngFor="let item of getItems(); let i = index"
-    >
+    <ion-item-sliding id="item100" *ngFor="let item of items; let i = index">
       <ion-item>
         <ion-label>
           <h2>Item: {{ item.name }}</h2>

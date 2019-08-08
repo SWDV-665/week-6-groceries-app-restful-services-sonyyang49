@@ -17,12 +17,8 @@ export class InputDialogService {
   //will show a blank form if add is selected.
   //will show a prefilled item that can be editted.
   async showPrompt(item?, index?) {
-    let ID;
-
-    if (item !== undefined) {
-      ID = item._id;
-    } else {
-      ID = null;
+    if (index !== undefined) {
+      var id = item._id;
     }
 
     const prompt = await this.alertCtrl.create({
@@ -56,8 +52,7 @@ export class InputDialogService {
 
             //Will update if exists.  Will add if not exist.
             if (index !== undefined) {
-              item.id = ID;
-              this.groceryService.editItem(item, index);
+              this.groceryService.editItem(item);
             } else {
               this.groceryService.addItem(item);
             }
