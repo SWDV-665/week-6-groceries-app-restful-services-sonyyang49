@@ -1,2 +1,32 @@
 # Week 6: RESTful service
 By: Sony Yang
+
+## Start Backend
+
+### Navigate to the backend folder
+
+```bash
+cd .\backend
+```
+
+#### Install dependencies and setup mongo
+
+1. Run `npm install` to install all required modules
+2. Run `mongod` to start the MongoDB server process
+3. Run `mongo groceries` to create `groceries` DB if it wasn't created already
+4. Run `npm start` to start the server
+5. If everything went right, you should see a message saying that the server was started and listenig on some port...
+
+#### Useful Links
+* MongoDB installation manual - https://docs.mongodb.com/manual/installation/
+* Mongoose Node Module - http://mongoosejs.com/
+
+## Start Frontend
+
+### Navigate to frontend folder
+```bash
+cd .\frontend
+```
+1. Run `npm install` to install all required modules
+2. Run 'npm start' or 'ionic serve'
+
