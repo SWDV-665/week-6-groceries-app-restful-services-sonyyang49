@@ -1,0 +1,33 @@
+page-home {
+  ion-title {
+    text-align: center;
+    .item-title{
+      font-size: 40px;
+      color: white;
+      text-shadow: 4px 4px 6px black;
+    }
+    
+  }
+
+  .home-header{
+      background-color: green;
+    }
+
+  ion-content {
+    text-align: center;
+    .item-name {
+      font-size: 32px;
+    }
+    .item-quantity {
+      font-size: 24px;
+    }
+  }
+
+  ion-label {
+    text-align: center;
+  }
+
+}
+
+
+
